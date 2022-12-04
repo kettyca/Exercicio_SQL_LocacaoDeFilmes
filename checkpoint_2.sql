@@ -29,9 +29,6 @@ create table locacao.solicitacao(
 														
 	on delete cascade									
 	on update cascade
-
-	-- Restrições: inclusão (chave primária); exclusão e atualizar
-	-- Sempre que houver atributo estrangeiro, usa exceção
 );
 
 create table locacao.filme(
@@ -76,14 +73,14 @@ commit;
 insert into locacao.categoria(sg_categoria, nm_categoria)
 values ('F', 'Fantasia');
 
-select * from locacao.categoria;			-- mostra a tabela
+select * from locacao.categoria;			
 
 --------------- PRÁTICA ---------------
 
 begin transaction;
 insert into locacao.cliente(nm_cliente)
 values 
-	('André'), ('Carol'), ('Gusta'), ('Ketty'), ('Math');			-- como o identity cria os códigos automaticamente, não precisa incluir os códigos aqui
+	('André'), ('Carol'), ('Gusta'), ('Ketty'), ('Math');			
 commit;
 select * from locacao.cliente;
 
