@@ -5,8 +5,8 @@ create database trainee;
 create schema locacao;
 
 create table locacao.cliente(
-	cd_cliente int primary key identity(1,1),			-- o int cria o cliente de forma automatica. ComeÁa no 1 e aumenta de 1 em 1. O identity gera um cÛdigo diferente a cada inserÁ„o de cliente
-	nm_cliente varchar(50) not null,					-- apesar de n„o ser chave, nm_cliente È um campo obrigatÛrio
+	cd_cliente int primary key identity(1,1),			
+	nm_cliente varchar(50) not null,					
 );
 
 create table locacao.classificacao(
@@ -15,23 +15,23 @@ create table locacao.classificacao(
 );
 
 create table locacao.categoria(
-	sg_categoria char(2) primary key,					-- char 1: possui 2 caracteres
+	sg_categoria char(2) primary key,					
 	nm_categoria varchar(30)  not null,			
 );
 
 create table locacao.solicitacao(
 	cd_solicitacao int primary key identity(1,1),
-	cd_cliente int not null,							-- pode se repetir, pois um cliente pode fazer v·rias solicitaÁıes || o identity acontece quando nao pode repetir e o int for uma chave
+	cd_cliente int not null,						
 	dt_solicitacao date not null,
 
 	foreign key (cd_cliente) references 
-		locacao.cliente(cd_cliente)						-- n„o precisa de virgula antes da exceÁ„o 
-														-- independente de ser chave ou nao, por ter estrangeiro, faz a exceÁ„o
-	on delete cascade									-- Ao excluir um cliente, exlui automaticamente todas as solicitaÁıes. || A aÁ„o depende da regra que quer
+		locacao.cliente(cd_cliente)						
+														
+	on delete cascade									
 	on update cascade
 
-	-- RestriÁıes: inclus„o (chave prim·ria); exclus„o e atualizar
-	-- Sempre que houver atributo estrangeiro, usa exceÁ„o
+	-- Restri√ß√µes: inclus√£o (chave prim√°ria); exclus√£o e atualizar
+	-- Sempre que houver atributo estrangeiro, usa exce√ß√£o
 );
 
 create table locacao.filme(
@@ -41,19 +41,19 @@ create table locacao.filme(
 	cd_classificacao int
 
 	foreign key (sg_categoria) references locacao.categoria(sg_categoria)
-	on delete set null									-- se exclui fica nulo
-	on update cascade,									-- atualiza em cascata
+	on delete set null									
+	on update cascade,									
 	
 	foreign key (cd_classificacao) references locacao.classificacao(cd_classificacao)
-	on delete set null									-- se exclui um filme, fica nulo
-	on update cascade									-- atualiza em cascata
+	on delete set null									
+	on update cascade									
 );
 
 create table locacao.solicitacao_filme(
 	cd_filme int not null,							
 	cd_solicitacao int not null,
 	dt_devolucao_prevista date not null,
-	dt_devolucao_real date,								-- n„o obrigatÛria, pois n„o h· sentido em colocar a data real hora de inserir
+	dt_devolucao_real date,									
 	
 	primary key(cd_filme, cd_solicitacao),
 	foreign key(cd_filme) references locacao.filme(cd_filme)
@@ -70,7 +70,7 @@ create table locacao.solicitacao_filme(
 begin transaction;
 -- insere dentro da tabela categoria os seguintes valores
 insert into locacao.categoria (sg_categoria, nm_categoria)
-values ('D', 'Drama'), ('A', 'Aventura'), ('FC', 'FicÁ„o CientÌfica'), ('C', 'ComÈdia'), ('R', 'Romance');	
+values ('D', 'Drama'), ('A', 'Aventura'), ('FC', 'Fic√ß√£o Cient√≠fica'), ('C', 'Com√©dia'), ('R', 'Romance');	
 commit;
 
 insert into locacao.categoria(sg_categoria, nm_categoria)
@@ -78,12 +78,12 @@ values ('F', 'Fantasia');
 
 select * from locacao.categoria;			-- mostra a tabela
 
---------------- PR¡TICA ---------------
+--------------- PR√ÅTICA ---------------
 
 begin transaction;
 insert into locacao.cliente(nm_cliente)
 values 
-	('AndrÈ'), ('Carol'), ('Gusta'), ('Ketty'), ('Math');			-- como o identity cria os cÛdigos automaticamente, n„o precisa incluir os cÛdigos aqui
+	('Andr√©'), ('Carol'), ('Gusta'), ('Ketty'), ('Math');			-- como o identity cria os c√≥digos automaticamente, n√£o precisa incluir os c√≥digos aqui
 commit;
 select * from locacao.cliente;
 
@@ -104,7 +104,7 @@ values
 	('Harry Potter e a Pedra filosofal', 'F', 002), 
 	('Star Wars: O Ataque dos Clones', 'FC', 002),  
 	('Pantera Negra', 'A', 003), 
-	('As Estrelas AlÈm do Tempo', 'D', 003),  
+	('As Estrelas Al√©m do Tempo', 'D', 003),  
 	('O Galinho Chicken Little', 'C', 001);
 commit;
 select * from locacao.filme;
@@ -155,7 +155,7 @@ commit;
 select * from locacao.solicitacao_filme;
 
 
-
+-----------------------------------------------------------------
 alter table locacao.classificacao
 add nm_Classificacao varchar(30) not null;
 
